@@ -4,11 +4,15 @@ import { BaseHttpService } from '../../shared/ui/header/services/base-http.servi
 import { Observable } from 'rxjs';
 import { Product } from '../../shared/interfaces/product.interface';
 
+
+const limit = 5;
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService extends BaseHttpService {
-  getProducts(): Observable<Product[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/products`);
+  getProducts(page: number): Observable<Product[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/products`, {
+      params: { limit: page * limit },
+    });
   }
 }

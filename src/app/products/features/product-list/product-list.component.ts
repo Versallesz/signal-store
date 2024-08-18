@@ -11,5 +11,10 @@ import { ProductCardComponent } from '../../ui/product-card/product-card.compone
   providers: []
 })
 export default class ProductListComponent {
-  productsState = inject(ProductStateService)
+  productsState = inject(ProductStateService);
+
+  changePage(){
+    const page = this.productsState.state.page() + 1;
+    this.productsState.changePage$.next(page);
+  }
 }
