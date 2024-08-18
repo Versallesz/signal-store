@@ -1,22 +1,27 @@
-{{ productsState.state().status }}
-@if (productsState.state().status === "loading") {
-  <p>We are loading the products for you :)</p>
-} @else {
-  <div class="flex justify-end my-6">
-    <button
-      type="button"
-      (click)="changePage()"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-    >
-      Cambiar página
-    </button>
-  </div>
-
-  <div class="mx-auto max-w-screen-xl">
-    <div class="grid grid-cols-[repeat(4,300px)] gap-4">
-      @for (product of productsState.state().products; track product) {
-        <app-product-card class="block" [product]="product" />
-      }
+@switch (productsState.state().status) {
+  @case ("loading") {
+    <p>We are loading the products for you :)</p>
+  }
+  @case ("error") {
+    <p>Error loading the products. Please try again later.</p>
+  }
+  @default {
+    <div class="flex justify-end my-6">
+      <button
+        type="button"
+        (click)="changePage()"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+      >
+        Cambiar página
+      </button>
     </div>
-  </div>
+
+    <div class="mx-auto max-w-screen-xl">
+      <div class="grid grid-cols-[repeat(4,300px)] gap-4">
+        @for (product of productsState.state().products; track product) {
+          <app-product-card class="block" [product]="product" />
+        }
+      </div>
+    </div>
+  }
 }
