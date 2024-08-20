@@ -1,10 +1,11 @@
 import { Component, effect, inject, input } from '@angular/core';
 import { ProductDetailStateService } from '../../services/product-detail-state.service';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [],
+  imports: [CurrencyPipe],
   templateUrl: './product-detail.component.html',
   styles: ``,
 })
