@@ -15,4 +15,8 @@ export class ProductService extends BaseHttpService {
       params: { limit: page * limit },
     });
   }
+
+  getProduct(id: string): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/products/${id}`);
+  }
 }
