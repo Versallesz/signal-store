@@ -6,6 +6,10 @@ export const routes: Routes = [
         loadChildren: () => import('./products/features/product-shell/product.route'),
     },
     {
+        path: '',
+         loadChildren: () => import('./products/features/product-shell/product.route'),
+     },
+    {
         path: '**',
         redirectTo: '',
         pathMatch: 'full'
