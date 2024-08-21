@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CartItemComponent } from './ui/cart-item/cart-item.component';
+import { CartStateService } from '../products/services/cart-state.service';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [],
+  imports: [CartItemComponent],
   templateUrl: './cart.component.html',
   styles: ``
 })
 export default class CartComponent {
 
+  state = inject(CartStateService).state;
 }
