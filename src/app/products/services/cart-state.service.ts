@@ -27,9 +27,23 @@ export class CartStateService {
   state = signalSlice({
     initialState: this.initialState,
     sources: [this.loadProducts$],
+    selectors: (state) => ({
+      count: () =>
+        state().products.reduce((acc, product) => acc + product.quantity, 0),
+      price: () => {
+        return state().products.reduce(
+          (acc, product) => acc + product.product.price * product.quantity,
+          0,
+        );
+      },
+    }),
     actionSources: {
       add: (state, action$: Observable<ProductItemCart>) =>
         action$.pipe(map((product) => this.add(state, product))),
+      remove: (state, action$: Observable<number>) =>
+        action$.pipe(map((productId) => this.remove(state, productId))),
+      update: (state, action$: Observable<ProductItemCart>) =>
+        action$.pipe(map((product) => this.update(state, product))),
     },
     effects: (state) => ({
       load: () => {
@@ -53,6 +67,26 @@ export class CartStateService {
     isInCart.quantity += 1;
     return {
       products: [...state().products],
+    };
+  }
+
+  private remove(state: Signal<State>, productId: number) {
+    return {
+      products: state().products.filter(
+        (product) => product.product.id !== productId,
+      ),
+    };
+  }
+
+  private update(state: Signal<State>, product: ProductItemCart) {
+    const products = state().products.map((productInCart) => {
+      if (productInCart.product.id === product.product.id) {
+        return { ...productInCart, quantity: product.quantity };
+      }
+      return productInCart;
+    });
+    return {
+      products,
     };
   }
 }
